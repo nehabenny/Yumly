@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import google.generativeai as genai
 import json
+import os
 
 app = Flask(__name__)
 
@@ -175,5 +176,5 @@ def get_full_recipe():
         return jsonify({"error": f"Error generating recipe: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(port=5000)
+    port = int(os.getenv("PORT", 5000))  # Default to 5000 if PORT is not set
+    app.run(host="0.0.0.0", port=port, debug=True)
