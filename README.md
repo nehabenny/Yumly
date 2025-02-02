@@ -1,14 +1,14 @@
-# [Project Name] 🎯
+# Yumly 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: Code Champs
 
 
 ### Team Members
-- Member 1: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Member 1: Fathima Thasneem t s - RSET
+- Member 2: Neha Benny - RSET
+- Member 3: Carolin Joseph - RSET
 
 ### Hosted Project Link
 [mention your project hosted project link here]
