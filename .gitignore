@@ -1,0 +1,69 @@
+# Compiled source #
+###################
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.out
+*.pyc
+*.pyo
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+*.sqlite3
+
+# Dependency directories #
+#########################
+node_modules/
+bower_components/
+venv/
+.env/
+.DS_Store
+
+# IDE and editor files #
+########################
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.iml
+
+# System files #
+################
+Thumbs.db
+Desktop.ini
+
+# Version control metadata #
+############################
+.git/
+
+# Ignore environment-specific files #
+####################################
+.env
+*.local
+
+# Ignore built assets #
+#######################
+dist/
+build/
+coverage/
+*.min.js
+*.min.css
+
+# Ignore temporary files #
+##########################
+*.bak
+*.tmp
+~*
+
+# Ignore test and debug artifacts #
+##################################
+__pycache__/
+coverage/
+.nyc_output/

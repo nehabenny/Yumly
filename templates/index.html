@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUMLY</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Yummy Recipe Finder</h1>
+    
+    <div class="recipe-form">
+        <label for="ingredients">✨ What's in your kitchen? ✨</label>
+        <textarea 
+            id="ingredients" 
+            name="ingredients" 
+            required 
+            placeholder="Example: chicken, rice, tomatoes, onions... Let's make something delicious! 🍜"
+        ></textarea>
+        <button onclick="generateRecipes()" id="generateButton">Find Yummy Recipes! 🎉</button>
+    </div>
+    <div>
+    <label for="filter_option">Filter By:</label>
+        <select name="filter_option">
+            <option value="None">None</option>
+            <option value="Allergies">Allergies (Nut-free, Dairy-free, Gluten-free)</option>
+            <option value="Diabetic">Diabetic-Friendly (Low Sugar & Low Carb)</option>
+            <option value="Cholesterol">Low Cholesterol (Heart-Healthy Ingredients)</option>
+        </select>
+    </div>
+    <div class="loading" id="loading">
+        Cooking up some amazing recipes for you...
+    </div>
+
+    <button onclick="showSuggestions()" id="back-button" style="display: none;">Back to Recipes</button>
+    
+    <div id="recipe-suggestions" class="recipe-suggestions"></div>
+    <div id="full-recipe"></div>
+
+    <script>
+        let currentIngredients = '';
+
+        function generateRecipes() {
+            const ingredients = document.getElementById('ingredients').value.trim();
+            const loading = document.getElementById('loading');
+            const suggestionsDiv = document.getElementById('recipe-suggestions');
+            const generateButton = document.getElementById('generateButton');
+
+            if (!ingredients) {
+                alert('Please enter some ingredients');
+                return;
+            }
+
+            currentIngredients = ingredients;
+            generateButton.disabled = true;
+            loading.style.display = 'block';
+            suggestionsDiv.innerHTML = '';
+            document.getElementById('full-recipe').style.display = 'none';
+
+            fetch('/get_recipe_suggestions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `ingredients=${encodeURIComponent(ingredients)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                if (data.error) {
+                    suggestionsDiv.innerHTML = `<p class="error">Error: ${data.error}</p>`;
+                } else {
+                    displayRecipeSuggestions(data.recipes);
+                }
+            })
+            .catch(error => {
+                loading.style.display = 'none';
+                suggestionsDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            })
+            .finally(() => {
+                generateButton.disabled = false;
+            });
+        }
+
+        function displayRecipeSuggestions(recipes) {
+            const suggestionsDiv = document.getElementById('recipe-suggestions');
+            suggestionsDiv.innerHTML = '';
+
+            recipes.forEach(recipe => {
+                const card = document.createElement('div');
+                card.className = 'recipe-card';
+                card.onclick = () => getFullRecipe(recipe.name);
+                
+                card.innerHTML = `
+                    <h3>${recipe.name}</h3>
+                    <p>${recipe.description}</p>
+                    <p><strong>Time:</strong> ${recipe.time} minutes</p>
+                    <div class="difficulty ${recipe.difficulty.toLowerCase()}">${recipe.difficulty}</div>
+                `;
+                
+                suggestionsDiv.appendChild(card);
+            });
+        }
+
+        function getFullRecipe(recipeName) {
+            const loading = document.getElementById('loading');
+            const fullRecipeDiv = document.getElementById('full-recipe');
+            const suggestionsDiv = document.getElementById('recipe-suggestions');
+            const backButton = document.getElementById('back-button');
+
+            loading.style.display = 'block';
+            fullRecipeDiv.innerHTML = '';
+            suggestionsDiv.style.display = 'none';
+            backButton.style.display = 'block';
+
+            fetch('/get_full_recipe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `recipe_name=${encodeURIComponent(recipeName)}&ingredients=${encodeURIComponent(currentIngredients)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                if (data.error) {
+                    fullRecipeDiv.innerHTML = `<p class="error">Error: ${data.error}</p>`;
+                } else {
+                    fullRecipeDiv.innerHTML = data.recipe;
+                }
+                fullRecipeDiv.style.display = 'block';
+            })
+            .catch(error => {
+                loading.style.display = 'none';
+                fullRecipeDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            });
+        }
+
+        function showSuggestions() {
+            document.getElementById('recipe-suggestions').style.display = 'grid';
+            document.getElementById('full-recipe').style.display = 'none';
+            document.getElementById('back-button').style.display = 'none';
+        }
+
+        // Add enter key support for textarea
+        document.getElementById('ingredients').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                generateRecipes();
+            }
+        });
+    </script>
+
+</body>
+</html>
