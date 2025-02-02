@@ -11,24 +11,20 @@
 - Member 3: Carolin Joseph - RSET
 
 ### Hosted Project Link
-[mention your project hosted project link here]
-
+https://yumly.onrender.com/
 ### Project Description
-[2-3 lines about what your project does]
-
+Yumly instantly crafts delicious, well-formatted recipes based on the ingredients you have and your dietary preferences. Whether you’re diabetic, watching cholesterol, or just out of groceries, we’ve got your back. No more kitchen panic, no more lifeless diet food—just instant, AI-generated culinary inspiration!
 ### The Problem statement
-[What ridiculous problem are you solving?]
-
+Ever wasted hours scrolling through endless recipe blogs only to find a 5,000-word life story before the actual recipe? Or worse—started cooking, only to realize you’re missing a key ingredient? We’re here to end the madness! And for those with dietary restrictions, why should you suffer through generic, uninspired meals? No more boring “healthy” food—our AI serves up delicious, tailored recipes that match your needs!
 ### The Solution
-[How are you solving it? Keep it fun!]
-
+We’ve trained an AI to think like a Michelin-starred chef (minus the attitude). Just type your ingredients, choose a dietary preference (Diabetic-friendly? Low cholesterol? No problem!), and voilà! Instant recipes without the fluff—no life stories, no irrelevant childhood memories, just food tailored to your needs.
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- Python
+- Flask,Bootstrap
+- Google Generative AI(Gemini API)
+- Github,VSCode
 
 For Hardware:
 - [List main components]
@@ -47,7 +43,8 @@ For Software:
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
+
+
 *Add caption explaining what this shows*
 
 ![Screenshot2](Add screenshot 2 here with proper name)
